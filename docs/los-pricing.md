@@ -168,3 +168,43 @@ Given that Rule B looks like this
 ```
 
 then the booking that happened after 4 January 2022 to 6 January 2022 will use 10200, 10000, 9000 as a rate depends on length of stay, instead of 6200, 6000, 5500, 5000
+
+
+### Updating Rates
+LOS rates are partial update. In order to add, update, or switch it off, it can be done partially. Changing value of each los value to 0, it will switch that los rate off. For example, after the request B was successfully sent, if los 2 needs to be turned off. It can be done partially by below request.
+```json
+{
+  "propertyId": 5,
+  "currency": "USD",
+  "offers": [
+    {
+      "roomId": 5,
+      "ratePlanId": 5,
+      "rates": [
+        {
+          "checkIn": {
+            "start": "2022-01-04",
+            "end": "2022-01-07"
+          },
+          "occupancyPrices": [
+            {
+              "occupancy": {
+                "min": 1,
+                "max": 1
+              },
+              "prices": [
+                {
+                  "los": 2,
+                  "value": 0
+                }
+              ]
+            }
+          ]
+      }
+      ]
+    }
+  ]
+}
+```
+This request will only update for los 2, and los 1 and 3 will remain the same.
+For the check-date of 2022-01-04 and check-out of 2022-01-06 (los 2), this will not be available in the storefront as it was already turned off.
