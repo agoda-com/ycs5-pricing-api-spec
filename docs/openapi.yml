@@ -76,6 +76,9 @@ components:
       example: USD
     LOSPrice:
       type: object
+      required:
+      - los
+      - value
       properties:
         los:
           type: integer
@@ -85,6 +88,9 @@ components:
           description: Price Value (with the currrency described in property level)
     Occupancy:
       type: object
+      required:
+      - min
+      - max
       properties:
         min:
           type: integer
@@ -94,6 +100,9 @@ components:
           description: maximum occupancy
     OccupancyPrice:
       type: object
+      required:
+      - occupancy
+      - prices
       description: Occupancy price object
       properties:
         occupancy:
@@ -104,6 +113,9 @@ components:
             $ref: '#/components/schemas/LOSPrice'
     OfferRate:
       type: object
+      required:
+      - checkIn
+      - occupancyPrices
       properties:
         checkIn:
           $ref: '#/components/schemas/CheckInDateRange'
@@ -129,16 +141,19 @@ components:
           format: "YYYY-MM-DD"
           example: "2021-12-31"
     LOS:
+      required:
+      - start
+      - end
       properties:
         start:
           type: integer
           format: int32
-          description: Start lengtgh of stay range
+          description: Start length of stay range
           example: 1
         end: 
           type: integer
           format: int32
-          description: End lengtgh of stay range
+          description: End length of stay range
           example: 10
     RateList:
       description: Rate list for each check-in date
@@ -240,6 +255,9 @@ components:
     SetRateRestriction:
       description: the object inidicate the default rate restriction
       type: object
+      required:
+      - startDate
+      - endDate
       properties:
         startDate:
           type: string
@@ -272,6 +290,10 @@ components:
     Offer:
       description: Offer object
       type: object
+      required:
+      - roomId
+      - ratePlanId
+      - rates
       properties:
         roomId:
           $ref: "#/components/schemas/RoomId"
@@ -336,6 +358,11 @@ components:
     SearchLosRequest:
       type: object
       description: The request body
+      required:
+       - propertyId
+       - roomId
+       - ratePlanId
+       - checkInDateRange
       properties:
         propertyId: 
           $ref: "#/components/schemas/PropertyId"
@@ -364,6 +391,10 @@ components:
     PostRateLosRequest:
       type: object
       description: The setup/update price offer 's request
+      required:
+      - propertyId
+      - currency
+      - offers
       properties:
         propertyId:
           $ref: "#/components/schemas/PropertyId"
